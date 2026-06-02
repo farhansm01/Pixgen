@@ -7,7 +7,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="border-b px-4">
+    <div className=" px-4">
       <nav className="flex justify-between items-center py-3 max-w-7xl mx-auto w-full">
         {/* Logo */}
         <Link href="/" className="flex gap-2 items-center">
