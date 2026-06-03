@@ -1,10 +1,23 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const userData = authClient.useSession();
+  const user = userData.data?.user;
+
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+    router.push("/");
+  };
 
   return (
     <div className=" px-4">
@@ -56,20 +69,41 @@ const Navbar = () => {
         </ul>
 
         {/* Desktop Auth Buttons */}
-        <div className="hidden md:flex items-center gap-2">
-          <Link
-            href="/signin"
-            className="text-sm px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/signup"
-            className="text-sm px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition-colors"
-          >
-            Sign Up
-          </Link>
-        </div>
+        {!user ? (
+          <div className="hidden md:flex items-center gap-2">
+            <Link
+              href="/signin"
+              className="text-sm px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/signup"
+              className="text-sm px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+            >
+              Sign Up
+            </Link>
+          </div>
+        ) : (
+          <div className="hidden md:flex items-center gap-2">
+            <Avatar>
+              <Avatar.Image
+                alt="NO IMAGE"
+                src={user?.image}
+                referrerPolicy="no-referrer"
+              />
+              <Avatar.Fallback>
+                {user?.name?.[0]?.toUpperCase()}
+              </Avatar.Fallback>
+            </Avatar>
+            <Button
+              onClick={handleSignOut}
+              className="text-sm px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+            >
+              Sign Out
+            </Button>
+          </div>
+        )}
 
         {/* Mobile Hamburger */}
         <button
@@ -120,22 +154,41 @@ const Navbar = () => {
           >
             Profile
           </Link>
-          <div className="flex gap-2 mt-2">
-            <Link
-              href="/signin"
-              onClick={() => setMenuOpen(false)}
-              className="flex-1 text-center px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/signup"
-              onClick={() => setMenuOpen(false)}
-              className="flex-1 text-center px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition-colors"
-            >
-              Sign Up
-            </Link>
-          </div>
+          {!user ? (
+            <div className="flex items-center gap-2 mt-2">
+              <Link
+                href="/signin"
+                className="text-sm px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                className="text-sm px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+              >
+                Sign Up
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 mt-2">
+              <Avatar>
+                <Avatar.Image
+                  alt="NO IMAGE"
+                  src={user?.image}
+                  referrerPolicy="no-referrer"
+                />
+                <Avatar.Fallback>
+                  {user?.name?.[0]?.toUpperCase()}
+                </Avatar.Fallback>
+              </Avatar>
+              <Button
+                onClick={handleSignOut}
+                className="text-sm px-4 py-2 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+              >
+                Sign Out
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </div>

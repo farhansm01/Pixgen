@@ -4,7 +4,6 @@ export default async function TopGenerations() {
   const res = await fetch("https://pixgen-roan.vercel.app/data.json");
   const data = await res.json();
   const topData = data.slice(0, 8);
-  console.log(topData);
 
   return (
     <div>
