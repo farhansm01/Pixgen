@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PixGen – AI Image Generation Gallery
+
+A modern AI-powered gallery platform where users can explore and interact with AI-generated images. Browse categorized images, view detailed prompts, and manage your profile after authentication.
+
+🌐 **Live Site:** [https://pixgen-roan.vercel.app](https://pixgen-roan.vercel.app)
+
+---
+
+## Features
+
+- **Home Page** — Hero banner with featured Top Generations section
+- **All Photos Page** — Full gallery with sidebar category filter (tabs on mobile)
+- **Photo Details Page** — Full image view with prompt, model, resolution, tags, likes & downloads
+- **Authentication** — Email/password sign up & sign in with Google OAuth support
+- **Protected Routes** — Profile and photo details pages secured via Next.js Proxy
+- **Profile Page** — View account info and update name & profile image
+- **Responsive Design** — Fully optimized for mobile, tablet, and desktop
+- **Toast Notifications** — Success and error feedback on all actions
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js 16 (App Router) | Framework |
+| Tailwind CSS v4 | Styling |
+| HeroUI | UI Component Library |
+| Better Auth v1.6.11 | Authentication |
+| MongoDB Atlas | Database |
+| Gravity UI Icons | Icon Library |
+| React Hot Toast | Notifications |
+| Vercel | Deployment |
+
+---
+
+## Pages
+
+| Route | Description | Protected |
+|---|---|---|
+| `/` | Home with banner and top generations | No |
+| `/all-photos` | Full gallery with category filter | No |
+| `/all-photos/[id]` | Detailed view of a single photo | Yes |
+| `/profile` | User profile with update option | Yes |
+| `/signin` | Email & Google sign in | No |
+| `/signup` | Register with email & Google | No |
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+
+- MongoDB Atlas account
+- Google OAuth credentials
+
+### Installation
+
+```bash
+git clone https://github.com/farhansm01/Pixgen.git
+cd pixgen
+npm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the root:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+BETTER_AUTH_SECRET=your_secret_key
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
+
+### Run Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+```
+src/
+├── app/
+│   ├── (main)/         # Pages with Navbar & Footer
+│   ├── (auth)/         # Sign in & Sign up pages
+│   └── api/auth/       # Better Auth API route
+├── components/         # Reusable components
+├── lib/
+│   ├── auth.js         # Better Auth server config
+│   └── auth-client.js  # Better Auth client config
+└── middleware.js        # Route protection (Proxy)
+public/
+└── data.json           # AI image data source
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Author
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Farhan Sadiq**
+- GitHub: [@farhansm01](https://github.com/farhansm01)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is open source and available under the [MIT License](LICENSE).
